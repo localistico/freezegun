@@ -327,6 +327,8 @@ class FakeDate(real_date, metaclass=FakeDateMeta):
 
     @staticmethod
     def _date_to_freeze():
+        if _should_use_real_time():
+            return real_datetime.now()
         return get_current_time()
 
     @classmethod
@@ -412,7 +414,7 @@ class FakeDatetime(real_datetime, FakeDate, metaclass=FakeDatetimeMeta):
 
     @staticmethod
     def _time_to_freeze():
-        if freeze_factories:
+        if freeze_factories and not _should_use_real_time():
             return get_current_time()
 
     @classmethod
