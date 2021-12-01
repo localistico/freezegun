@@ -714,6 +714,8 @@ def test_should_use_real_time():
 
     with freeze_time(frozen):
         assert time.time() == expected_frozen
+        assert datetime.datetime.now() == frozen
+        assert datetime.date.today() == frozen.date()
         # assert time.localtime() == expected_frozen_local
         assert time.gmtime() == expected_frozen_gmt
         if HAS_CLOCK:
@@ -726,6 +728,8 @@ def test_should_use_real_time():
 
     with freeze_time(frozen, ignore=['_pytest']):
         assert time.time() != expected_frozen
+        assert datetime.datetime.now() != frozen
+        assert datetime.date.today() != frozen.date()
         # assert time.localtime() != expected_frozen_local
         assert time.gmtime() != expected_frozen_gmt
         if HAS_CLOCK:
